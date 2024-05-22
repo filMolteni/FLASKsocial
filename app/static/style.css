@@ -1,0 +1,174 @@
+
+/* Stile per il contenitore principale */
+.container {
+    width: 50%; /* Larghezza del contenitore */
+    margin: 0 auto; /* Centratura del contenitore */
+    padding-top: 50px; /* Spaziatura sopra il contenitore */
+}
+
+/* Stile per il titolo del form di login */
+h2 {
+    text-align: center; /* Allineamento al centro */
+    margin-bottom: 30px; /* Spaziatura inferiore */
+}
+
+/* Stile per i campi del form */
+.form-group {
+    margin-bottom: 20px; /* Spaziatura inferiore */
+}
+
+/* Stile per i campi di input */
+.form-control {
+    width: 100%; /* Larghezza completa */
+    padding: 10px; /* Spaziatura interna */
+    border: 1px solid #ccc; /* Bordo grigio */
+    border-radius: 5px; /* Angoli arrotondati */
+}
+
+/* Stile per il pulsante di login */
+.btn-primary {
+    background-color: #007bff; /* Colore di sfondo blu */
+    color: #fff; /* Colore del testo bianco */
+    border: none; /* Nessun bordo */
+    padding: 10px 20px; /* Spaziatura interna */
+    cursor: pointer; /* Cambio del cursore al passaggio */
+    border-radius: 5px; /* Angoli arrotondati */
+    display: block; /* Display a blocco */
+    margin-top: 20px; /* Spaziatura sopra il pulsante */
+    width: 100%; /* Larghezza completa */
+}
+
+/* Stile per gli elementi della lista dei messaggi di flash */
+.flashes {
+    list-style: none; /* Nessun tipo di elenco */
+    padding: 0; /* Nessun padding */
+}
+
+/* Stile per i singoli messaggi di flash */
+.flashes li {
+    margin-top: 10px; /* Spaziatura sopra il messaggio */
+}
+
+/* Stile per il messaggio di successo */
+.success {
+    color: green; /* Colore del testo verde */
+}
+
+/* Stile per il messaggio di errore */
+.danger {
+    color: red; /* Colore del testo rosso */
+}
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.user {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+}
+
+.user h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user p {
+    color: #666;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #333;
+}
+
+.photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.photo {
+    flex: 1 1 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.photo:hover {
+    transform: scale(1.05);
+}
+
+.photo img {
+    width: 100%;
+    height: auto;
+}
+
+.photo p {
+    padding: 10px;
+    margin: 0;
+    background: #f8f8f8;
+    color: #333;
+    font-size: 0.9em;
+    text-align: center;
+}
+/* Stile per il menu */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    background-color: #111;
+}

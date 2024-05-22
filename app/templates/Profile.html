@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% extends 'layout.html' %}
+
+    {% block title %}Galleria Utenti{% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <h1>Profilo di {{ user.username }}</h1>
+        <p>Email: {{ user.email }}</p>
+        <p>Descrizione: {{ user.descrizione }}</p>
+
+        <div class="profile-photo">
+            {% for photo in user.photos %}
+                {% if photo.isProfileImg %}
+                    <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}" class="profile-img">
+                    <p>{{ photo.descrizione }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h2>Altre Foto</h2>
+        <div class="photos">
+            {% for photo in user.photos %}
+                {% if not photo.isProfileImg %}
+                    <div class="photo">
+                        <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}">
+                        <p>{{ photo.descrizione }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
