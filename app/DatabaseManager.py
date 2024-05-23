@@ -72,3 +72,22 @@ class DatabaseManager:
             user['photos'] = photos
         cur.close()
         return user
+    
+    def add_photo(self, username, filename, descrizione, isProfileImg):
+        cur = self.mysql.connection.cursor()
+        cur.execute("SELECT ID FROM utenti WHERE username = %s", [username])
+        result = cur.fetchone()
+        if result is None:
+            cur.close()
+            raise ValueError(f"Utente con username {username} non trovato.")
+        
+        user_id = result['ID']
+        cur.execute("""
+            INSERT INTO foto (idUtente, path, descrizione, isProfileImg)
+            VALUES (%s, %s, %s, %s)
+        """, (user_id, filename, descrizione, isProfileImg))
+        self.mysql.connection.commit()
+        cur.close()
+    
+   
+        

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_wtf import FlaskForm
+from werkzeug.utils import secure_filename
 from wtforms import StringField, PasswordField, validators
+import os
 
 class PageManager:
     def __init__(self, app, db_manager):
@@ -46,7 +48,30 @@ class PageManager:
             else:
                 session.pop('username', None)
                 flash('Logout effettuato con successo', 'success')
-                return redirect(url_for('index'))
+                return redirect(url_for('login'))
+
+        @self.app.route('/upload_photo', methods=['POST'])
+        def upload_photo():
+            if 'username' not in session:
+                flash('Devi essere loggato per caricare foto', 'danger')
+                return redirect(url_for('login'))
+
+            username = session['username']
+            descrizione = request.form['descrizione']
+            isProfileImg = 'isProfileImg' in request.form
+
+            file = request.files['file']
+            if file and file.filename != '':
+                filename = secure_filename(file.filename)
+                filepath = os.path.join(self.app.static_folder, 'image', filename)
+                file.save(filepath)
+
+                self.db_manager.add_photo(username, filename, descrizione, isProfileImg)
+                flash('Foto caricata con successo!', 'success')
+                return redirect(url_for('profile'))
+            else:
+                flash('Errore durante il caricamento della foto', 'danger')
+                return redirect(url_for('profile'))
 
         @self.app.route('/')
         def index():
