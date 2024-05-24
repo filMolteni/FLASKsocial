@@ -1,63 +1,64 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilo Utente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% extends 'layout.html' %}
 
-{% block title %}Profilo Utente{% endblock %}
+    {% block title %}Profilo Utente{% endblock %}
 
-{% block content %}
-<div class="container">
-    <h1>Profilo di {{ user.username }}</h1>
-    <p>Email: {{ user.email }}</p>
-    <p>Descrizione: {{ user.descrizione }}</p>
+    {% block content %}
+    <div class="container">
+        <h1>Profilo di {{ user.username }}</h1>
+        <p>Email: {{ user.email }}</p>
+        <p>Descrizione: {{ user.descrizione }}</p>
 
-    <div class="profile-photo">
-        {% for photo in user.photos %}
-            {% if photo.isProfileImg %}
-                <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}" class="profile-img">
-                <p>{{ photo.descrizione }}</p>
-            {% endif %}
-        {% endfor %}
-    </div>
-
-    <h2>Altre Foto</h2>
-    <div class="photos">
-        {% for photo in user.photos %}
-            {% if not photo.isProfileImg %}
-                <div class="photo">
-                    <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}">
+        <div class="profile-photo">
+            {% for photo in user.photos %}
+                {% if photo.isProfileImg %}
+                    <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}" class="profile-img">
                     <p>{{ photo.descrizione }}</p>
-                </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-    <div class="upload-form">
-        <h3>Aggiungi una Foto</h3>
-        <form method="POST" action="{{ url_for('upload_photo') }}" enctype="multipart/form-data">
+        <h2>Altre Foto</h2>
+        <div class="photos">
+            {% for photo in user.photos %}
+                {% if not photo.isProfileImg %}
+                    <div class="photo">
+                        <img src="{{ url_for('static', filename='image/' ~ photo.path) }}" alt="{{ photo.descrizione }}">
+                        <p>{{ photo.descrizione }}</p>
+                        <form method="POST" action="{{ url_for('profile') }}">
+                            <input type="hidden" name="delete" value="{{ photo.id }}">
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h2>Aggiungi una foto</h2>
+        <form method="POST" action="{{ url_for('profile') }}" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="descrizione">Descrizione</label>
-                <input type="text" name="descrizione" id="descrizione" required>
+                <input type="text" name="descrizione" id="descrizione" class="form-control">
             </div>
             <div class="form-group">
-                <label for="file">Seleziona Immagine</label>
-                <input type="file" name="file" id="file" required>
+                <label for="file">File</label>
+                <input type="file" name="file" id="file" class="form-control">
             </div>
             <div class="form-group">
-                <label for="isProfileImg">
-                    <input type="checkbox" name="isProfileImg" id="isProfileImg">
-                    Imposta come immagine profilo
-                </label>
+                <label for="isProfileImg">Usa come immagine del profilo</label>
+                <input type="checkbox" name="isProfileImg" id="isProfileImg">
             </div>
-            <button type="submit">Carica Foto</button>
+            <button type="submit" class="btn btn-primary">Carica</button>
         </form>
     </div>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <ul class="flashes">
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-</div>
-{% endblock %}
+    {% endblock %}
+</body>
+</html>

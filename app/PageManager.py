@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_wtf import FlaskForm
-from werkzeug.utils import secure_filename
 from wtforms import StringField, PasswordField, validators
 import os
 
@@ -30,7 +29,7 @@ class PageManager:
 
             return render_template('login.html', form=form)
 
-        @self.app.route('/profile')
+        @self.app.route('/profile', methods=['GET', 'POST'])
         def profile():
             if 'username' not in session:
                 flash('Devi essere loggato per vedere questa pagina', 'danger')
@@ -38,40 +37,32 @@ class PageManager:
 
             username = session['username']
             user = self.db_manager.get_user_with_photos(username)
+
+            if request.method == 'POST':
+                if 'delete' in request.form:
+                    photo_id = request.form['delete']
+                    self.db_manager.delete_photo(photo_id)
+                    flash('Foto eliminata con successo!', 'success')
+                    return redirect(url_for('profile'))
+
+               
+                descrizione = request.form['descrizione']
+                isProfileImg = 'isProfileImg' in request.form
+                file = request.files['file']
+                if file:
+                    filename = file.filename
+                    file.save(os.path.join(self.app.static_folder, 'images', filename))
+                    self.db_manager.add_photo(username, filename, descrizione, isProfileImg)
+                    flash('Foto caricata con successo!', 'success')
+                    return redirect(url_for('profile'))
+
             return render_template('profile.html', user=user)
-        
+
         @self.app.route('/logout')
         def logout():
-            if 'username' not in session:
-                flash('Devi essere loggato per vedere questa pagina', 'danger')
-                return redirect(url_for('login'))
-            else:
-                session.pop('username', None)
-                flash('Logout effettuato con successo', 'success')
-                return redirect(url_for('login'))
-
-        @self.app.route('/upload_photo', methods=['POST'])
-        def upload_photo():
-            if 'username' not in session:
-                flash('Devi essere loggato per caricare foto', 'danger')
-                return redirect(url_for('login'))
-
-            username = session['username']
-            descrizione = request.form['descrizione']
-            isProfileImg = 'isProfileImg' in request.form
-
-            file = request.files['file']
-            if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(self.app.static_folder, 'image', filename)
-                file.save(filepath)
-
-                self.db_manager.add_photo(username, filename, descrizione, isProfileImg)
-                flash('Foto caricata con successo!', 'success')
-                return redirect(url_for('profile'))
-            else:
-                flash('Errore durante il caricamento della foto', 'danger')
-                return redirect(url_for('profile'))
+            session.pop('username', None)
+            flash('Logout effettuato con successo', 'success')
+            return redirect(url_for('login'))
 
         @self.app.route('/')
         def index():
