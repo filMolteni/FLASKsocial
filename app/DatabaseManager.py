@@ -1,4 +1,5 @@
 from flask_mysqldb import MySQL
+import MySQLdb.cursors
 
 class DatabaseManager:
     def __init__(self, app):
@@ -90,11 +91,9 @@ class DatabaseManager:
         cur.close()
     
     def delete_photo(self, photo_id):
-        query = "DELETE FROM photos WHERE id = %s"
-        cur = self.conn.cursor()
-        cur.execute(query, (photo_id,))
-        self.mysql.connection.commit()
-        cur.close()
+        cur = self.mysql.connection.cursor()
+        cur.execute("DELETE FROM foto WHERE id = %s", (photo_id,))
+        self.conn.commit()
     
    
         

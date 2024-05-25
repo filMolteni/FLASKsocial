@@ -45,13 +45,18 @@ class PageManager:
                     flash('Foto eliminata con successo!', 'success')
                     return redirect(url_for('profile'))
 
-               
+                # Gestisci il caricamento della foto
                 descrizione = request.form['descrizione']
                 isProfileImg = 'isProfileImg' in request.form
                 file = request.files['file']
                 if file:
                     filename = file.filename
-                    file.save(os.path.join(self.app.static_folder, 'images', filename))
+                    save_path = os.path.join(self.app.root_path, 'static', 'image', filename)
+                    
+                    # Crea la directory se non esiste
+                    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+                    file.save(save_path)
                     self.db_manager.add_photo(username, filename, descrizione, isProfileImg)
                     flash('Foto caricata con successo!', 'success')
                     return redirect(url_for('profile'))
