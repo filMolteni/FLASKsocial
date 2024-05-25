@@ -30,33 +30,10 @@ Un'applicazione di social network basata su Flask che consente agli utenti di re
     ```
 
 4. Configura il database MySQL:
-
-    - Crea un database MySQL e aggiorna la configurazione nel file `config.py`:
-      ```python
-      MYSQL_HOST = 'localhost'
-      MYSQL_USER = 'tuo-username'
-      MYSQL_PASSWORD = 'tuo-password'
-      MYSQL_DB = 'nome-del-database'
-      ```
-    - Esegui lo script SQL per creare le tabelle necessarie:
-      ```sql
-      CREATE TABLE utenti (
-          ID INT AUTO_INCREMENT PRIMARY KEY,
-          username VARCHAR(50) NOT NULL,
-          email VARCHAR(100) NOT NULL,
-          password VARCHAR(100) NOT NULL,
-          descrizione TEXT
-      );
-
-      CREATE TABLE foto (
-          ID INT AUTO_INCREMENT PRIMARY KEY,
-          idUtente INT,
-          path VARCHAR(255),
-          descrizione TEXT,
-          isProfileImg BOOLEAN,
-          FOREIGN KEY (idUtente) REFERENCES utenti(ID)
-      );
-      ```
+    ```
+    importa il database dal repository
+    ```
+   
 
 ## Utilizzo
 
@@ -80,20 +57,4 @@ Un'applicazione di social network basata su Flask che consente agli utenti di re
 - `static/css/styles.css`: Contiene gli stili CSS.
 - `static/images/`: Contiene le immagini caricate dagli utenti.
 
-## Esempio di Configurazione
 
-### `app/__init__.py`
-
-```python
-from flask import Flask
-from DatabaseManager import DatabaseManager
-from PageManager import PageManager
-
-app = Flask(__name__)
-app.config.from_object('config')
-
-db_manager = DatabaseManager(app)
-page_manager = PageManager(app, db_manager)
-
-if __name__ == "__main__":
-    app.run(debug=True)
