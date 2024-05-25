@@ -93,7 +93,7 @@ class DatabaseManager:
     def delete_photo(self, photo_id):
         cur = self.mysql.connection.cursor()
         cur.execute("DELETE FROM foto WHERE ID = %s", [photo_id])
-        self.mysql.connection.commit()  # Changed from self.conn.commit() to self.mysql.connection.commit()
+        self.mysql.connection.commit() 
         cur.close()
     
    

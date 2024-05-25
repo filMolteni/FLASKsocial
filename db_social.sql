@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 22, 2024 alle 12:00
+-- Creato il: Mag 25, 2024 alle 08:36
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -35,6 +35,17 @@ CREATE TABLE `foto` (
   `isProfileImg` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dump dei dati per la tabella `foto`
+--
+
+INSERT INTO `foto` (`ID`, `idUtente`, `path`, `descrizione`, `isProfileImg`) VALUES
+(1, 1, 'img1.jpg', 'immagine di una montagna ', 0),
+(2, 1, 'img2.jpg', 'immagine persona', 1),
+(3, 2, 'img3.jpg', 'basket', 0),
+(4, 1, 'img4.jpg', 'moto', 0),
+(5, 1, 'img5.jpg', 'motoCross', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -54,7 +65,8 @@ CREATE TABLE `utenti` (
 --
 
 INSERT INTO `utenti` (`ID`, `username`, `email`, `password`, `descrizione`) VALUES
-(1, 'filippo', 'filippo.molteni2005@gmail.com', 'password', 'ciao sono uno studente');
+(1, 'filippo', 'filippo.molteni2005@gmail.com', 'password', 'ciao sono uno studente'),
+(2, 'user2', 'user2@gmail.com', 'password', 'ciao sono user2');
 
 --
 -- Indici per le tabelle scaricate
@@ -81,13 +93,13 @@ ALTER TABLE `utenti`
 -- AUTO_INCREMENT per la tabella `foto`
 --
 ALTER TABLE `foto`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Limiti per le tabelle scaricate
