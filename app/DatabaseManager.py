@@ -96,5 +96,12 @@ class DatabaseManager:
         self.mysql.connection.commit() 
         cur.close()
     
+    def create_user(self, username, email, password):
+        cur = self.mysql.connection.cursor()
+        cur.execute("INSERT INTO utenti (username, email, password) VALUES (%s, %s, %s)", (username, email, password))
+        self.mysql.connection.commit()
+        cur.close()
+    
+
    
         

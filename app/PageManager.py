@@ -1,16 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, validators
+from wtforms import StringField, PasswordField, TextAreaField, validators
 import os
+
+
 
 class PageManager:
     def __init__(self, app, db_manager):
         self.app = app
         self.db_manager = db_manager
-
-        class LoginForm(FlaskForm):
-            username = StringField('Username', [validators.Length(min=1, max=50)])
-            password = PasswordField('Password', [validators.DataRequired()])
+        
 
         @self.app.route('/login', methods=['GET', 'POST'])
         def login():
@@ -73,3 +72,40 @@ class PageManager:
         def index():
             users = self.db_manager.get_all_users_with_photos()
             return render_template('index.html', users=users)
+        
+        @self.app.route('/register', methods=['GET', 'POST'])
+        def register():
+            form = RegistrationForm()
+            if request.method == 'POST' and form.validate_on_submit():
+                username = form.username.data
+                email = form.email.data
+                password = form.password.data
+
+                existing_user = self.db_manager.get_user_by_username(username)
+                if existing_user:
+                    flash('Il nome utente è già in uso', 'danger')
+                else:
+                    self.db_manager.create_user(username, email, password)
+                    flash('Registrazione avvenuta con successo! Puoi effettuare il login.', 'success')
+                    return redirect(url_for('login'))
+
+            return render_template('register.html', form=form)
+        
+       
+
+
+
+
+class LoginForm(FlaskForm):
+            username = StringField('Username', [validators.Length(min=1, max=50)])
+            password = PasswordField('Password', [validators.DataRequired()])
+
+
+class RegistrationForm(FlaskForm):
+            username = StringField('Username', [validators.Length(min=1, max=50), validators.DataRequired()])
+            email = StringField('Email', [validators.Length(min=1, max=50), validators.DataRequired()])
+            password = PasswordField('Password', [validators.DataRequired(), validators.Length(min=6)])
+            confirm_password = PasswordField('Conferma Password', [validators.EqualTo('password', message='Le password devono coincidere'), validators.DataRequired()])
+
+class UpdateDescriptionForm(FlaskForm):
+    description = TextAreaField('Descrizione', [validators.Length(min=1, max=500)])
