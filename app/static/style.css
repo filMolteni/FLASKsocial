@@ -122,7 +122,8 @@ h3 {
 }
 
 .photo {
-    flex: 1 1 200px;
+    flex: 1 1 150px; /* Dimensioni ridotte per le immagini */
+    max-width: 150px;
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow: hidden;
@@ -138,15 +139,6 @@ h3 {
 .photo img {
     width: 100%;
     height: auto;
-}
-
-.photo p {
-    padding: 10px;
-    margin: 0;
-    background: #f8f8f8;
-    color: #333;
-    font-size: 0.9em;
-    text-align: center;
 }
 /* Stile per il menu */
 nav ul {
@@ -302,4 +294,69 @@ nav li a:hover {
     background-color: #0056b3;
 }
 
+/* Contenitore principale */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Stile della barra di navigazione */
+nav {
+    background: #333;
+    color: #fff;
+    padding: 10px 0;
+    position: relative;
+}
+
+/* Stile della lista di navigazione */
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* Stile degli elementi della lista di navigazione */
+nav ul li {
+    margin-right: 20px;
+}
+
+/* Stile dei link di navigazione */
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ddd;
+}
+
+/* Stile del form di ricerca */
+.search-form {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.search-form input[type="text"] {
+    padding: 5px;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+}
+
+.btn nav{
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 

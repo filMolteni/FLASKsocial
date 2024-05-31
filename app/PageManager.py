@@ -91,6 +91,17 @@ class PageManager:
 
             return render_template('register.html', form=form)
         
+        @self.app.route('/search', methods=['GET', 'POST'])
+        def search_user():
+            user = None
+            if request.method == 'POST':
+                search_query = request.form.get('username')
+                user = self.db_manager.get_user_with_photos(search_query)
+                if not user:
+                    flash('User not found', 'danger')
+            return render_template('search.html', user=user)
+
+        
        
 
 
